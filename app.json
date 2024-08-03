@@ -1,13 +1,13 @@
 {
   "expo": {
-    "name": "finance_app",
-    "slug": "finance_app",
-    "version": "1.0.0",
+    "name": "Finance Tracker",
+    "slug": "finance_tracker",
+    "version": "0.0.1",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/icons/android/100.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/playstore.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -16,7 +16,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/android/mipmap-mdpi/finance_navigator.png",
         "backgroundColor": "#ffffff"
       }
     },
