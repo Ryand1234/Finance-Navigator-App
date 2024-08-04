@@ -1,4 +1,4 @@
-import React from 'react';
+ import React from 'react';
 import { View, Text, StyleSheet, ScrollView, ActivityIndicator } from 'react-native';
 import { LineChart } from 'react-native-chart-kit';
 import { Dimensions } from 'react-native';
@@ -15,11 +15,11 @@ function Chart({ title, data }) {
   }
 
   const currentMonthIndex = new Date().getMonth();
-  const numberOfMonths = 4;
+  const numberOfMonths = 3;
   const prevMonths = currentMonthIndex - numberOfMonths >= 1 ? currentMonthIndex - numberOfMonths : 0
   let currentChartData = JSON.parse(JSON.stringify(data));
-  currentChartData.labels = currentChartData.labels.splice(prevMonths, numberOfMonths);
-  currentChartData.datasets[0].data = currentChartData.datasets[0].data.splice(prevMonths, numberOfMonths);
+  currentChartData.labels = currentChartData.labels.splice(prevMonths, currentMonthIndex - prevMonths + 1);
+  currentChartData.datasets[0].data = currentChartData.datasets[0].data.splice(prevMonths, currentMonthIndex - prevMonths + 1);
   return (
     <View style={styles.chartWrapper}>
       <Text style={styles.chartTitle}>{title}</Text>

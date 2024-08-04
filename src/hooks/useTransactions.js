@@ -30,8 +30,8 @@ export function useTransactions() {
 
       if (typeof transaction.amount === 'string') {
           transactionAmount = parseFloat(transaction.amount); // Convert to integer if it's a string
-      } else if (typeof transaction.amount === 'number' && !Number.isInteger(transaction.amount)) {
-          transactionAmount = transaction.amount; // Already an integer
+      } else if (typeof transaction.amount === 'number') {
+          transactionAmount = transaction.amount * 1.0; // Already an integer
       } else {
           transactionAmount = 0; // Handle other types as needed
       }

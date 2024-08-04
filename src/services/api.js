@@ -67,8 +67,8 @@ const getNumber = (amount) => {
 
   if (typeof amount === 'string') {
     transactionAmount = parseFloat(amount); // Convert to integer if it's a string
-  } else if (typeof amount === 'number' && !Number.isInteger(amount)) {
-    transactionAmount = amount; // Already an integer
+  } else if (typeof amount === 'number') {
+    transactionAmount = amount * 1.0; // Already an integer
   } else {
     transactionAmount = 0.0; // Handle other types as needed
   }

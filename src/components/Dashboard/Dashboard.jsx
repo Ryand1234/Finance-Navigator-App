@@ -1,14 +1,15 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import OverviewCard from './OverviewCard';
 import AIAssistant from '../AIAssistant/AIAssistant';
 import { ExpenseVsTimeChart, SavingsRemainingChart } from '../Analytics/AnalyticsCharts';
 import { useTransactions } from '../../hooks/useTransactions';
 import { useAnalytics } from '../../hooks/useAnalytics';
+import { useFocusEffect } from '@react-navigation/native';
 
 function Dashboard() {
   const { totalBalance, totalIncome, totalExpenses } = useTransactions();
-  const { expenseVsTimeData, savingsRemainingData } = useAnalytics();
+  const { expenseVsTimeData, savingsRemainingData, refreshData } = useAnalytics();
 
   const aiAssistantData = {
     balance: totalBalance,
@@ -16,6 +17,11 @@ function Dashboard() {
     expenses: totalExpenses,
   };
 
+  useFocusEffect(
+    useCallback(() => {
+      refreshData();
+    }, [])
+  );
   return (
     <ScrollView style={styles.container}>
       <View style={styles.mainContent}>
