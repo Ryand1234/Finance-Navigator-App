@@ -24,35 +24,29 @@ const Header = () => {
 };
 
 const styles = StyleSheet.create({
-header: {
-    padding: 20,
-    backgroundColor: '#f8f9fa',
+  header: {
+    padding: 10,
+    paddingTop: 50,
+    backgroundColor: '#007bff',
     borderBottomWidth: 1,
     borderBottomColor: '#dee2e6',
-    padding: '20px',
-    backgroundColor: '#007bff',
-    color: '#fff',
-    textAlign: 'center',
+    alignItems: 'center',
   },
   title: {
     fontWeight: 'bold',
+    color: '#fff',
+    fontSize: 18,
     marginBottom: 10,
-    margin: '0',
   },
   navList: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    listStyleType: 'none',
-    padding: 0,
-    margin: 0,
-    display: 'flex',
-    justifyContent: 'center',
+    width: '100%',
   },
   navItem: {
-    color: '#007bff',
     color: '#fff',
-    textDecoration: 'none',
-    margin: '0 15px',
+    fontSize: 16,
+    marginHorizontal: 15,
   },
 });
 

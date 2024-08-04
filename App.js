@@ -15,11 +15,13 @@ function App() {
     <NavigationContainer>
       <View style={styles.container}>
         <Header />
-        <Stack.Navigator initialRouteName="Home">
-          <Stack.Screen name="Home" component={Dashboard} />
-          <Stack.Screen name="Analytics" component={AnalyticsChart} />
-          <Stack.Screen name="Transactions" component={TransactionList} />
-        </Stack.Navigator>
+        <View style={styles.content}>
+          <Stack.Navigator initialRouteName="Home">
+            <Stack.Screen name="Home" component={Dashboard} />
+            <Stack.Screen name="Analytics" component={AnalyticsChart} />
+            <Stack.Screen name="Transactions" component={TransactionList} />
+          </Stack.Navigator>
+        </View>
         <Footer />
       </View>
     </NavigationContainer>
@@ -30,9 +32,11 @@ export default App;
 
 const styles = StyleSheet.create({
   container: {
-    display: 'flex',
     flex: 1,
     backgroundColor: '#fff',
+  },
+  content: {
+    flex: 1,
     justifyContent: 'center',
   },
 });

@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import OverviewCard from './OverviewCard';
 import AIAssistant from '../AIAssistant/AIAssistant';
@@ -8,6 +8,8 @@ import { useAnalytics } from '../../hooks/useAnalytics';
 import { useFocusEffect } from '@react-navigation/native';
 
 function Dashboard() {
+  const [isExpanseModalVisible, setIsExpanseModalVisible] = useState(false);
+  const [isSavingModalVisible, setIsSavingModalVisible] = useState(false);
   const { totalBalance, totalIncome, totalExpenses } = useTransactions();
   const { expenseVsTimeData, savingsRemainingData, refreshData } = useAnalytics();
 
@@ -28,8 +30,8 @@ function Dashboard() {
         <Text style={styles.heading}>Overview of Financial Data</Text>
         <OverviewCard balance={totalBalance} income={totalIncome} expenses={totalExpenses} />
         <View style={styles.chartsContainer}>
-          <ExpenseVsTimeChart data={expenseVsTimeData} />
-          <SavingsRemainingChart data={savingsRemainingData} />
+            <ExpenseVsTimeChart data={expenseVsTimeData} isModalVisible={isExpanseModalVisible} setIsModalVisible={setIsExpanseModalVisible} />
+            <SavingsRemainingChart data={savingsRemainingData} isModalVisible={isSavingModalVisible} setIsModalVisible={setIsSavingModalVisible} />
         </View>
       </View>
       <AIAssistant context="dashboard" data={aiAssistantData} />

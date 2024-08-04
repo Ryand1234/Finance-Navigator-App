@@ -1,5 +1,5 @@
- import React from 'react';
-import { View, Text, StyleSheet, ScrollView, ActivityIndicator } from 'react-native';
+ import React, { useState } from 'react';
+import { View, Text, StyleSheet, Button, Modal, ScrollView, ActivityIndicator, TouchableOpacity } from 'react-native';
 import { LineChart } from 'react-native-chart-kit';
 import { Dimensions } from 'react-native';
 import { useAnalytics } from '../../hooks/useAnalytics';
@@ -35,15 +35,84 @@ function Chart({ title, data }) {
   );
 }
 
-export function ExpenseVsTimeChart({ data }) {
-  return <Chart title="Expenses vs Time" data={data} />;
+
+const FullScreenGraphModal = ({ title, visible, onClose, chartData, chartConfig }) => {
+//     console.log("F: ", chartData)
+
+  if (!chartData || !chartData.labels || !chartData.datasets) {
+    return (
+    <Modal visible={visible} animationType="slide" transparent={true}>
+      <View style={styles.modalOverlay}>
+        <View style={styles.modalContent}>
+            <Text style={styles.loadingOrError}>No data available for {title}</Text>
+        </View>
+      </View>
+    </Modal>
+    );
+  }
+  let currentChartData = JSON.parse(JSON.stringify(chartData));
+  currentChartData.labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', "Aug", 'Sept', 'Oct', 'Nov', "Dec"]
+  return (
+    <Modal visible={visible} animationType="slide" transparent={true}>
+      <View style={styles.modalOverlay}>
+        <View style={styles.modalContent}>
+            <Text style={styles.chartTitle}>{title}</Text>
+          <LineChart
+            data={currentChartData}
+            width={320}
+            height={220}
+            chartConfig={chartConfig}
+          />
+          <TouchableOpacity onPress={onClose} style={styles.closeButton}>
+            <Text style={styles.closeButtonText}>Close</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    </Modal>
+  );
+};
+
+export function ExpenseVsTimeChart({ data, isModalVisible, setIsModalVisible }) {
+    return (
+    <View>
+      <Chart title="Expenses vs Time" data={data} />
+      <Button
+        title="Show Full Year Graph"
+        onPress={() => setIsModalVisible(true)}
+      />
+      <FullScreenGraphModal
+        title="Expenses vs Time"
+        visible={isModalVisible}
+        onClose={() => setIsModalVisible(false)}
+        chartData={data}
+        chartConfig={chartConfig}
+      />
+    </View>
+  );
 }
 
-export function SavingsRemainingChart({ data }) {
-  return <Chart title="Savings Remaining vs Time" data={data} />;
+export function SavingsRemainingChart({ data, isModalVisible, setIsModalVisible }) {
+  return (
+    <View>
+      <Chart title="Savings Remaining vs Time" data={data} />
+      <Button
+        title="Show Full Year Graph"
+        onPress={() => setIsModalVisible(true)}
+      />
+      <FullScreenGraphModal
+        title="Savings Remaining vs Time"
+        visible={isModalVisible}
+        onClose={() => setIsModalVisible(false)}
+        chartData={data}
+        chartConfig={chartConfig}
+      />
+    </View>
+  );
 }
 
 function AnalyticsCharts() {
+  const [isExpanseModalVisible, setIsExpanseModalVisible] = useState(false);
+  const [isSavingModalVisible, setIsSavingModalVisible] = useState(false);
   const { expenseVsTimeData, savingsRemainingData, expenseForecastData, isLoading, error } = useAnalytics();
 
   if (isLoading) return <ActivityIndicator size="large" color="#0000ff" style={styles.loadingOrError} />;
@@ -54,8 +123,8 @@ function AnalyticsCharts() {
       <Text style={styles.heading}>Analytics Dashboard</Text>
       <Text style={styles.subHeading}>View your financial performance over time</Text>
       <View>
-        <ExpenseVsTimeChart data={expenseVsTimeData} />
-        <SavingsRemainingChart data={savingsRemainingData} />
+        <ExpenseVsTimeChart data={expenseVsTimeData} isModalVisible={isExpanseModalVisible} setIsModalVisible={setIsExpanseModalVisible} />
+        <SavingsRemainingChart data={savingsRemainingData} isModalVisible={isSavingModalVisible} setIsModalVisible={setIsSavingModalVisible} />
         <Chart title="Expense Forecast" data={expenseForecastData} />
       </View>
       <AIAssistant
@@ -107,6 +176,29 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     padding: 20,
     fontSize: 18,
+  },
+  modalOverlay: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  modalContent: {
+    width: '90%',
+    backgroundColor: '#fff',
+    padding: 20,
+    borderRadius: 10,
+    alignItems: 'center',
+  },
+  closeButton: {
+    marginTop: 20,
+    padding: 10,
+    backgroundColor: '#007bff',
+    borderRadius: 5,
+  },
+  closeButtonText: {
+    color: '#fff',
+    fontWeight: 'bold',
   },
 });
 
