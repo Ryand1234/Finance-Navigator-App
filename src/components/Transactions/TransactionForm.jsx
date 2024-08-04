@@ -2,12 +2,14 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { View, Text, TextInput, Button, StyleSheet, Modal, TouchableOpacity, Alert } from 'react-native';
 import { Picker } from '@react-native-picker/picker'; // Ensure the import is correct
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 const TransactionForm = ({ onSubmit, onClose }) => {
   const [amount, setAmount] = useState('');
   const [description, setDescription] = useState('');
   const [type, setType] = useState('income');
-  const [date, setDate] = useState('');
+  const [date, setDate] = useState(new Date().toISOString().split('T')[0]);
+  const [showDatePicker, setShowDatePicker] = useState(false);
 
   const handleSubmit = () => {
     if (!amount || !description || !date) {
@@ -18,8 +20,15 @@ const TransactionForm = ({ onSubmit, onClose }) => {
     setAmount('');
     setDescription('');
     setType('income');
-    setDate('');
+    setDate(new Date().toISOString().split('T')[0]);
     onClose();
+  };
+
+
+  const handleDateChange = (event, selectedDate) => {
+    const currentDate = selectedDate || date;
+    setShowDatePicker(false);
+    setDate(currentDate.toISOString().split('T')[0]);
   };
 
   return (
@@ -58,13 +67,17 @@ const TransactionForm = ({ onSubmit, onClose }) => {
             </View>
             <View style={styles.inputGroup}>
               <Text>Date</Text>
-              <TextInput
-                style={styles.input}
-                value={date}
-                onChangeText={setDate}
-                placeholder="YYYY-MM-DD"
-                required
-              />
+                <TouchableOpacity onPress={() => setShowDatePicker(true)}>
+                  <Text style={styles.dateText}>{date}</Text>
+                </TouchableOpacity>
+                {showDatePicker && (
+                  <DateTimePicker
+                    value={new Date(date)}
+                    mode="date"
+                    display="default"
+                    onChange={handleDateChange}
+                  />
+                )}
             </View>
             <View style={styles.buttonContainer}>
               <Button title="Add Transaction" onPress={handleSubmit} />
@@ -90,7 +103,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     padding: 20,
     borderRadius: 8,
-    width: 400,
+    width: '80%', // Set the width of the modal content to 80% of the screen width
+    maxWidth: 400,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,

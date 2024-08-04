@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, Button, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, Button, FlatList, StyleSheet, TouchableOpacity, Modal } from 'react-native';
 import TransactionForm from './TransactionForm'; // Assuming this is a React Native component
 import { useTransactions } from '../../hooks/useTransactions';
 import AIAssistant from '../AIAssistant/AIAssistant';
@@ -64,7 +64,7 @@ function TransactionList() {
         {showPopup && <TransactionForm onSubmit={addTransaction} onClose={() => setShowPopup(false)} />}
       </View>
       <AIAssistant
-        context='transactions'
+        context="transactions"
         data={transactionData}
       />
     </View>
@@ -77,9 +77,9 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   header: {
-    flexDirection: 'row',
+    flexDirection: 'column',
     justifyContent: 'space-between',
-    alignItems: 'center',
+    alignItems: 'flex-start',
     marginBottom: 20,
   },
   title: {
@@ -101,6 +101,7 @@ const styles = StyleSheet.create({
     flex: 1,
     textAlign: 'center',
     fontWeight: 'bold',
+    width: 100, // Set a fixed width for each header item
   },
   transaction: {
     flexDirection: 'row',
@@ -111,6 +112,7 @@ const styles = StyleSheet.create({
   },
   description: {
     flex: 1,
+    textAlign: 'center',
   },
   amount: {
     flex: 1,

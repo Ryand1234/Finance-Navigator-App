@@ -5,6 +5,7 @@ import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import Dashboard from './src/components/Dashboard/Dashboard'; // Replace with your actual screen component
 import AnalyticsChart from './src/components/Analytics/AnalyticsCharts'
 import TransactionList from './src/components/Transactions/TransactionList'
+import ProfilePage from './src/components/Profile/Profile'
 import Header from './src/components/common/Header'; // Adjust the path as needed
 import Footer from './src/components/common/Footer'; // Adjust the path as needed
 
@@ -16,10 +17,11 @@ function App() {
       <View style={styles.container}>
         <Header />
         <View style={styles.content}>
-          <Stack.Navigator initialRouteName="Home">
+          <Stack.Navigator initialRouteName="Profile">
             <Stack.Screen name="Home" component={Dashboard} />
             <Stack.Screen name="Analytics" component={AnalyticsChart} />
             <Stack.Screen name="Transactions" component={TransactionList} />
+            <Stack.Screen name="Profile" component={ProfilePage} />
           </Stack.Navigator>
         </View>
         <Footer />

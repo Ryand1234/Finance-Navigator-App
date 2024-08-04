@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Finance Tracker",
-    "slug": "finance_tracker",
+    "name": "Finance Navigator",
+    "slug": "finance-navigator",
     "version": "0.0.1",
     "orientation": "portrait",
     "icon": "./assets/icons/android/100.png",
@@ -18,10 +18,17 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/android/mipmap-mdpi/finance_navigator.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.ryand1234.financenavigator"
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "2ec00305-2481-42df-9786-42c240c25e6b"
+      }
+    },
+    "owner": "ryand1234"
   }
 }
